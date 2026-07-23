@@ -36,7 +36,6 @@
 
 html, body {
   height: 100%;
-  overflow: hidden;
 }
 
 body {
@@ -86,7 +85,11 @@ body {
   padding: 24px;
   min-height: 100vh;
   animation: fadeIn 0.5s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
+
+#page1 { overflow: hidden; }
 
 .page.active {
   display: flex;
