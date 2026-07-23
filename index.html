@@ -795,7 +795,7 @@ input[type="time"].form-input::-webkit-calendar-picker-indicator {
 
     <button id="btnShare" class="btn btn-share">📸 Share as image</button>
     <div id="shareStatus" class="email-status"></div>
-    <button id="btnBackToPage2from4" class="btn-back">← Pick a different date</button>
+    <button id="btnBackToPage1from4" class="btn-back">← Start over</button>
 
     <p class="confirm-msg" style="margin-top: 16px;">Get ready for the most amazing time together! 💕</p>
     <div style="font-size: 2rem;">🥰</div>
@@ -898,7 +898,7 @@ const btnNext = document.getElementById('btnNext');
 const btnBackToPage1 = document.getElementById('btnBackToPage1');
 const btnConfirm = document.getElementById('btnConfirm');
 const btnBackToPage2 = document.getElementById('btnBackToPage2');
-const btnBackToPage2from4 = document.getElementById('btnBackToPage2from4');
+const btnBackToPage1from4 = document.getElementById('btnBackToPage1from4');
 const btnShare = document.getElementById('btnShare');
 const shareStatus = document.getElementById('shareStatus');
 const shareCapture = document.getElementById('shareCapture');
@@ -1191,7 +1191,7 @@ function goBackToPage2() {
 }
 
 btnBackToPage2.addEventListener('click', goBackToPage2);
-btnBackToPage2from4.addEventListener('click', goBackToPage2);
+btnBackToPage1from4.addEventListener('click', () => showPage(page1, false));
 
 // ===================== SHARE AS IMAGE =====================
 btnShare.addEventListener('click', async () => {
