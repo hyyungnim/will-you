@@ -954,10 +954,38 @@ function launchConfetti() {
 }
 
 // ===================== PAGE NAVIGATION =====================
-function showPage(page) {
+const pageStack = [];
+const pageMap = { page1, page2, page3, page4 };
+
+function getPageId(page) {
+  for (const [id, el] of Object.entries(pageMap)) {
+    if (el === page) return id;
+  }
+  return null;
+}
+
+function showPage(page, pushHistory = true) {
+  if (!page) { showPage(page1); return; }
   [page1, page2, page3, page4].forEach(p => p.classList.remove('active'));
   page.classList.add('active');
+  if (pushHistory) {
+    const id = getPageId(page);
+    if (id) {
+      pageStack.push(id);
+      history.pushState({ page: id }, '');
+    }
+  }
 }
+
+window.addEventListener('popstate', () => {
+  if (pageStack.length <= 1) {
+    history.back();
+    return;
+  }
+  pageStack.pop();
+  const prev = pageStack[pageStack.length - 1];
+  showPage(pageMap[prev], false);
+});
 
 // ===================== NO BUTTON — STAYS IN MODAL =====================
 function getBtnPos() {
@@ -1119,7 +1147,7 @@ btnNext.addEventListener('click', () => {
 });
 
 btnBackToPage1.addEventListener('click', () => {
-  showPage(page1);
+  showPage(page1, false);
 });
 
 // ===================== PAGE 3: EXPERIENCE SELECTION =====================
@@ -1156,7 +1184,7 @@ function goBackToPage2() {
   selectedDate = null;
   btnConfirm.disabled = true;
   document.querySelectorAll('.date-card').forEach(c => c.classList.remove('selected'));
-  showPage(page2);
+  showPage(page2, false);
 }
 
 btnBackToPage2.addEventListener('click', goBackToPage2);
