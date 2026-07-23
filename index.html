@@ -792,6 +792,7 @@ input[type="time"].form-input::-webkit-calendar-picker-indicator {
 
     <button id="btnShare" class="btn btn-share">📸 Share as image</button>
     <div id="shareStatus" class="email-status"></div>
+    <button id="btnBackToPage2from4" class="btn-back">← Pick a different date</button>
 
     <p class="confirm-msg" style="margin-top: 16px;">Get ready for the most amazing time together! 💕</p>
     <div style="font-size: 2rem;">🥰</div>
@@ -799,7 +800,7 @@ input[type="time"].form-input::-webkit-calendar-picker-indicator {
 </div>
 
 <!-- ==================== SHARE IMAGE CAPTURE (hidden) ==================== -->
-<div id="shareCapture" style="position: fixed; left: -9999px; top: 0; width: 500px; padding: 40px; background: linear-gradient(145deg, #fff5f7 0%, #ffe8ef 50%, #f0f8ff 100%); border-radius: 32px; font-family: 'Nunito', sans-serif; text-align: center; box-shadow: 0 20px 60px rgba(255, 107, 157, 0.25);">
+<div id="shareCapture" style="position: fixed; left: 0; top: 0; width: 500px; padding: 40px; background: linear-gradient(145deg, #fff5f7 0%, #ffe8ef 50%, #f0f8ff 100%); border-radius: 32px; font-family: 'Nunito', sans-serif; text-align: center; box-shadow: 0 20px 60px rgba(255, 107, 157, 0.25); opacity: 0; pointer-events: none; z-index: -1;">
   <div style="font-size: 52px; margin-bottom: 8px;">💖</div>
   <div style="font-family: 'Dancing Script', cursive; font-size: 42px; font-weight: 700; color: #e8437e; line-height: 1.2;">It's a Date!</div>
   <div style="margin: 12px 0 18px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #ff6b9d; font-size: 20px;">
@@ -894,6 +895,7 @@ const btnNext = document.getElementById('btnNext');
 const btnBackToPage1 = document.getElementById('btnBackToPage1');
 const btnConfirm = document.getElementById('btnConfirm');
 const btnBackToPage2 = document.getElementById('btnBackToPage2');
+const btnBackToPage2from4 = document.getElementById('btnBackToPage2from4');
 const btnShare = document.getElementById('btnShare');
 const shareStatus = document.getElementById('shareStatus');
 const shareCapture = document.getElementById('shareCapture');
@@ -1150,12 +1152,15 @@ btnConfirm.addEventListener('click', () => {
   setTimeout(() => clearInterval(interval), 12000);
 });
 
-btnBackToPage2.addEventListener('click', () => {
+function goBackToPage2() {
   selectedDate = null;
   btnConfirm.disabled = true;
   document.querySelectorAll('.date-card').forEach(c => c.classList.remove('selected'));
   showPage(page2);
-});
+}
+
+btnBackToPage2.addEventListener('click', goBackToPage2);
+btnBackToPage2from4.addEventListener('click', goBackToPage2);
 
 // ===================== SHARE AS IMAGE =====================
 btnShare.addEventListener('click', async () => {
@@ -1163,35 +1168,28 @@ btnShare.addEventListener('click', async () => {
   btnShare.disabled = true;
 
   try {
-    shareCapture.style.position = 'fixed';
-    shareCapture.style.left = '0';
-    shareCapture.style.top = '0';
-    shareCapture.style.transform = 'none';
-    shareCapture.style.width = '500px';
-    shareCapture.style.opacity = '0';
-    shareCapture.style.pointerEvents = 'none';
-    shareCapture.style.zIndex = '-1';
+    const clone = shareCapture.cloneNode(true);
+    clone.style.position = 'fixed';
+    clone.style.left = '50%';
+    clone.style.top = '50%';
+    clone.style.transform = 'translate(-50%, -50%)';
+    clone.style.opacity = '1';
+    clone.style.zIndex = '10000';
+    clone.style.pointerEvents = 'none';
+    document.body.appendChild(clone);
 
     await new Promise(r => requestAnimationFrame(r));
-    await new Promise(r => requestAnimationFrame(r));
 
-    const canvas = await html2canvas(shareCapture, {
-      backgroundColor: null,
+    const canvas = await html2canvas(clone, {
+      backgroundColor: '#fff5f7',
       scale: 2,
       useCORS: true,
       logging: false,
-      width: shareCapture.scrollWidth || 500,
-      height: shareCapture.scrollHeight
+      width: 500,
+      height: clone.scrollHeight
     });
 
-    shareCapture.style.position = 'fixed';
-    shareCapture.style.left = '-9999px';
-    shareCapture.style.top = '0';
-    shareCapture.style.width = '';
-    shareCapture.style.transform = '';
-    shareCapture.style.opacity = '';
-    shareCapture.style.pointerEvents = '';
-    shareCapture.style.zIndex = '';
+    document.body.removeChild(clone);
 
     const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
     const file = new File([blob], 'our-date.png', { type: 'image/png' });
