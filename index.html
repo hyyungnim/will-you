@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will you go out with me? 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+:root {
+  --pink-lightest: #fff5f7;
+  --pink-bg: #ffe8ef;
+  --pink-main: #ff6b9d;
+  --pink-dark: #e8437e;
+  --pink-glow: rgba(255, 107, 157, 0.25);
+  --blue-light: #e8faff;
+  --blue-main: #4fc3f7;
+  --blue-dark: #3d5a80;
+  --blue-glow: rgba(79, 195, 247, 0.25);
+  --text-dark: #2d3436;
+  --text-mid: #636e72;
+  --white: #ffffff;
+  --shadow-soft: 0 4px 20px rgba(255, 107, 157, 0.15);
+  --shadow-btn: 0 6px 25px rgba(255, 107, 157, 0.3);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-full: 50px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(135deg, var(--pink-lightest) 0%, var(--pink-bg) 50%, #f0f8ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+}
+
+#hearts-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.heart {
+  position: absolute;
+  bottom: -40px;
+  color: var(--pink-main);
+  font-size: 24px;
+  animation: floatUp linear infinite;
+  opacity: 0;
+  user-select: none;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-110vh) rotate(720deg) scale(1.2); opacity: 0; }
+}
+
+.page {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 680px;
+  padding: 24px;
+  min-height: 100vh;
+  animation: fadeIn 0.5s ease;
+}
+
+.page.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  box-shadow: var(--shadow-soft);
+  border: 2px solid rgba(255, 107, 157, 0.12);
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+/* ============= PAGE 1: PROPOSAL ============= */
+.proposal-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--pink-dark);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.proposal-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-mid);
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0 28px;
+  color: var(--pink-main);
+  font-size: 1.2rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  height: 2px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, var(--pink-main), transparent);
+  border-radius: 2px;
+}
+
+/* ============= BUTTONS ============= */
+.btn-row {
+  position: relative;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.btn {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  user-select: none;
+}
+
+.btn-yes {
+  background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+  color: white;
+  padding: 18px 52px;
+  font-size: 1.3rem;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-btn);
+  letter-spacing: 0.5px;
+  min-width: 160px;
+  z-index: 5;
+}
+
+.btn-yes:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 35px rgba(255, 107, 157, 0.4);
+}
+
+.btn-yes:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.btn-no {
+  background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+  color: #666;
+  padding: 12px 28px;
+  font-size: 1rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+  cursor: default;
+  transition: left 0.25s ease, top 0.25s ease;
+  touch-action: none;
+  z-index: 2;
+}
+
+/* ============= PAGE 2: DATE & TIME PICKER ============= */
+.form-group {
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.form-label .emoji {
+  margin-right: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid rgba(255, 107, 157, 0.15);
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  color: var(--text-dark);
+  background: var(--white);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-input:focus {
+  border-color: var(--pink-main);
+  box-shadow: 0 0 0 3px var(--pink-glow);
+}
+
+.form-input::placeholder {
+  color: #bbb;
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 70px;
+  line-height: 1.5;
+}
+
+/* Style date/time inputs */
+input[type="date"].form-input,
+input[type="time"].form-input {
+  cursor: pointer;
+}
+
+input[type="date"].form-input::-webkit-calendar-picker-indicator,
+input[type="time"].form-input::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* ============= PAGE 3: EXPERIENCE SELECTOR ============= */
+.section-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--pink-dark);
+  margin-bottom: 4px;
+}
+
+.section-sub {
+  color: var(--text-mid);
+  font-size: 1rem;
+  margin-bottom: 28px;
+}
+
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.date-card {
+  background: var(--white);
+  border: 2px solid rgba(255, 107, 157, 0.10);
+  border-radius: var(--radius-md);
+  padding: 18px 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.date-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--pink-main), var(--blue-main));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+}
+
+.date-card:hover {
+  border-color: var(--pink-main);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-soft);
+}
+
+.date-card.selected {
+  border-color: var(--pink-main);
+  border-width: 2.5px;
+  box-shadow: 0 0 0 3px var(--pink-glow), var(--shadow-soft);
+  background: linear-gradient(135deg, #fff5f7, #e8faff);
+}
+
+.date-card.selected .card-emoji {
+  transform: scale(1.15);
+}
+
+.date-card .card-content {
+  position: relative;
+  z-index: 1;
+}
+
+.card-emoji {
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 6px;
+  transition: transform 0.3s ease;
+}
+
+.card-label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  display: block;
+}
+
+.card-desc {
+  font-size: 0.78rem;
+  color: var(--text-mid);
+  margin-top: 4px;
+  display: block;
+}
+
+.check-mark {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 1rem;
+  z-index: 2;
+  display: none;
+}
+
+.date-card.selected .check-mark {
+  display: block;
+}
+
+/* ============= SHARED BUTTON STYLES ============= */
+.btn-primary {
+  background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+  color: white;
+  padding: 16px 48px;
+  font-size: 1.15rem;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-btn);
+  width: 100%;
+  max-width: 320px;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 35px rgba(255, 107, 157, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-blue {
+  background: linear-gradient(135deg, var(--blue-main), #29b6f6);
+  box-shadow: 0 6px 25px rgba(79, 195, 247, 0.3);
+}
+
+.btn-blue:hover {
+  box-shadow: 0 10px 35px rgba(79, 195, 247, 0.4) !important;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--pink-main);
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  padding: 4px 0;
+  transition: opacity 0.2s;
+  display: inline;
+}
+
+.btn-text:hover {
+  opacity: 0.7;
+}
+
+.btn-text:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: var(--text-mid);
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  padding: 8px 16px;
+  transition: color 0.2s;
+}
+
+.btn-back:hover {
+  color: var(--pink-main);
+}
+
+/* ============= PAGE 4: CONFIRMATION ============= */
+.confirm-icon {
+  font-size: 4rem;
+  margin-bottom: 12px;
+  animation: bounceHeart 1s ease infinite;
+}
+
+@keyframes bounceHeart {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.confirm-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.6rem;
+  color: var(--pink-dark);
+  font-weight: 700;
+}
+
+.confirm-detail {
+  margin: 16px 0 8px;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+}
+
+.confirm-detail span {
+  font-weight: 700;
+  color: var(--pink-main);
+}
+
+.confirm-msg {
+  color: var(--text-mid);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.confirm-summary {
+  background: var(--pink-bg);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  margin: 12px 0 20px;
+  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.confirm-summary strong {
+  color: var(--pink-dark);
+}
+
+.btn-share {
+  background: linear-gradient(135deg, var(--pink-main), var(--blue-main));
+  color: white;
+  padding: 14px 36px;
+  font-size: 1rem;
+  border-radius: var(--radius-full);
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 25px rgba(255, 107, 157, 0.25);
+  margin-top: 4px;
+  transition: all 0.25s ease;
+  width: 100%;
+  max-width: 320px;
+}
+
+.btn-share:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 35px rgba(255, 107, 157, 0.35);
+}
+
+#capture-area {
+  position: relative;
+}
+
+.email-status {
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  margin-top: 10px;
+  min-height: 24px;
+}
+
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ============= RESPONSIVE ============= */
+@media (max-width: 600px) {
+  .card {
+    padding: 32px 18px;
+    border-radius: var(--radius-md);
+  }
+  .proposal-title {
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+  }
+  .proposal-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+  .btn-yes {
+    padding: 15px 32px;
+    font-size: clamp(0.95rem, 4vw, 1.15rem);
+    min-width: 130px;
+  }
+  .btn-no {
+    padding: 10px 20px;
+    font-size: clamp(0.8rem, 3.5vw, 0.95rem);
+  }
+  .btn-row {
+    min-height: 160px;
+  }
+  .section-title {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+  .section-sub {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+  .date-grid {
+    gap: 10px;
+  }
+  .card-emoji {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+  .card-label {
+    font-size: 0.85rem;
+  }
+  .card-desc {
+    font-size: 0.7rem;
+  }
+  .confirm-title {
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+  }
+  .confirm-icon {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+  .btn-primary, .btn-confirm, .btn-next {
+    padding: 14px 28px;
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
+    max-width: 100%;
+  }
+  .form-input {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+  .page {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .card {
+    padding: 24px 12px;
+  }
+  .proposal-title {
+    font-size: clamp(1.3rem, 6vw, 1.6rem);
+  }
+  .btn-yes {
+    padding: 12px 24px;
+    min-width: 110px;
+  }
+  .btn-no {
+    padding: 8px 16px;
+  }
+  .btn-row {
+    min-height: 140px;
+  }
+  .date-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .date-card {
+    padding: 12px 10px;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .divider::before,
+  .divider::after {
+    width: 30px;
+  }
+  .confirm-summary {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+  }
+  .btn-share {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .proposal-title {
+    font-size: 2.4rem;
+  }
+  .card {
+    padding: 40px 32px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="hearts-container"></div>
+
+<!-- ==================== PAGE 1: PROPOSAL ==================== -->
+<div id="page1" class="page active">
+  <div class="card">
+    <div class="proposal-title">Will you go out with me?</div>
+    <p class="proposal-subtitle">There's something special I've been wanting to ask...</p>
+    <div class="divider">💗 ✿ 💗</div>
+    <div class="btn-row" id="btnRow">
+      <button id="btnYes" class="btn btn-yes">Yes! 💖</button>
+      <button id="btnNo" class="btn btn-no">No 💔</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2: DATE & TIME ==================== -->
+<div id="page2" class="page">
+  <div class="card">
+    <div class="section-title">When should we go? 📅</div>
+    <p class="section-sub">Pick a date and time for our special time together</p>
+
+    <div class="form-group">
+      <label class="form-label" for="datePicker"><span class="emoji">📆</span> Choose a date</label>
+      <input type="date" id="datePicker" class="form-input" min="">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="timePicker"><span class="emoji">⏰</span> Pick a time</label>
+      <input type="time" id="timePicker" class="form-input" value="18:00">
+    </div>
+
+    <div class="form-group" style="text-align: center;">
+      <div style="font-size: 0.95rem; color: var(--text-dark); background: var(--pink-bg); border-radius: var(--radius-sm); padding: 14px 16px; line-height: 1.7;">
+        <span style="font-size: 1.1rem;">💌</span><br>
+        I can't stop thinking about you. Every moment with you feels like a dream.<br>
+        I'm counting down the seconds until I get to see you again. 💕
+      </div>
+      <input type="hidden" id="extraNote" value="I can't stop thinking about you. Every moment with you feels like a dream. I'm counting down the seconds until I get to see you again. 💕">
+    </div>
+
+    <button id="btnNext" class="btn btn-text" disabled>Continue →</button>
+    <button id="btnBackToPage1" class="btn-back">← Wait, I need to think again</button>
+  </div>
+</div>
+
+<!-- ==================== PAGE 3: EXPERIENCE SELECTOR ==================== -->
+<div id="page3" class="page">
+  <div class="card">
+    <div class="section-title">Pick Your Date! 💕</div>
+    <p class="section-sub">Choose the experience you'd love to share</p>
+    <div class="date-grid" id="dateGrid">
+      <div class="date-card" data-value="breakfast">
+        <div class="card-content">
+          <span class="card-emoji">🥞</span>
+          <span class="card-label">Breakfast Date</span>
+          <span class="card-desc">Morning vibes & cozy bites</span>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="date-card" data-value="lunch">
+        <div class="card-content">
+          <span class="card-emoji">🥗</span>
+          <span class="card-label">Lunch Date</span>
+          <span class="card-desc">Midday delight & good talks</span>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="date-card" data-value="dinner">
+        <div class="card-content">
+          <span class="card-emoji">🍝</span>
+          <span class="card-label">Dinner Date</span>
+          <span class="card-desc">Evening romance & candlelight</span>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="date-card" data-value="coffee">
+        <div class="card-content">
+          <span class="card-emoji">☕</span>
+          <span class="card-label">Coffee Date</span>
+          <span class="card-desc">Warm drinks & sweet chats</span>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="date-card" data-value="stroll">
+        <div class="card-content">
+          <span class="card-emoji">🌳</span>
+          <span class="card-label">Park Stroll</span>
+          <span class="card-desc">Hand in hand through nature</span>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="date-card" data-value="waterview">
+        <div class="card-content">
+          <span class="card-emoji">🌊</span>
+          <span class="card-label">Water View</span>
+          <span class="card-desc">Scenic escape by the water</span>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="date-card" data-value="picnic">
+        <div class="card-content">
+          <span class="card-emoji">🧺</span>
+          <span class="card-label">Picnic Date</span>
+          <span class="card-desc">Outdoor charm & sunshine</span>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="date-card" data-value="sunset">
+        <div class="card-content">
+          <span class="card-emoji">🌅</span>
+          <span class="card-label">Sunset Watch</span>
+          <span class="card-desc">Golden hour & beautiful views</span>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+    </div>
+    <button id="btnConfirm" class="btn btn-primary btn-blue" disabled>Can't wait! Let's Go 💑</button>
+    <button id="btnBackToPage2" class="btn-back">← Pick a different time</button>
+  </div>
+</div>
+
+<!-- ==================== PAGE 4: CONFIRMATION ==================== -->
+<div id="page4" class="page">
+  <div class="confetti-container" id="confettiContainer"></div>
+  <div class="card" id="captureArea">
+    <div class="confirm-icon">💖</div>
+    <div class="confirm-title">It's a Date!</div>
+    <p class="confirm-detail">I'll take you on a <span id="selectedDateDisplay">✨</span></p>
+
+    <div class="confirm-summary" id="confirmSummary">
+      <strong>📆 Date:</strong> <span id="summaryDate">—</span><br>
+      <strong>⏰ Time:</strong> <span id="summaryTime">—</span><br>
+      <strong>💬 Note:</strong> <span id="summaryNote">—</span>
+    </div>
+
+    <button id="btnShare" class="btn btn-share">📸 Share as image</button>
+    <div id="shareStatus" class="email-status"></div>
+
+    <p class="confirm-msg" style="margin-top: 16px;">Get ready for the most amazing time together! 💕</p>
+    <div style="font-size: 2rem;">🥰</div>
+  </div>
+</div>
+
+<script>
+// ===================== CONFIG =====================
+const noMessages = [
+  "I'm too shy... 🌷",
+  "Let me think... 💭",
+  "Not right now 💫",
+  "I can't... 💔",
+  "I'm not ready... 🥺",
+  "I need a sign 🌟"
+];
+
+const dateLabels = {
+  breakfast: 'Breakfast Date 🥞',
+  lunch: 'Lunch Date 🥗',
+  dinner: 'Dinner Date 🍝',
+  coffee: 'Coffee Date ☕',
+  stroll: 'Park Stroll 🌳',
+  waterview: 'Water View 🌊',
+  picnic: 'Picnic Date 🧺',
+  sunset: 'Sunset Watch 🌅'
+};
+
+// ===================== STATE =====================
+let selectedDate = null;
+let noBtnMessageIdx = 0;
+
+// ===================== DOM REFS =====================
+const page1 = document.getElementById('page1');
+const page2 = document.getElementById('page2');
+const page3 = document.getElementById('page3');
+const page4 = document.getElementById('page4');
+
+const btnYes = document.getElementById('btnYes');
+const btnNo = document.getElementById('btnNo');
+const btnRow = document.getElementById('btnRow');
+const btnNext = document.getElementById('btnNext');
+const btnBackToPage1 = document.getElementById('btnBackToPage1');
+const btnConfirm = document.getElementById('btnConfirm');
+const btnBackToPage2 = document.getElementById('btnBackToPage2');
+const btnShare = document.getElementById('btnShare');
+const shareStatus = document.getElementById('shareStatus');
+const captureArea = document.getElementById('captureArea');
+
+const dateGrid = document.getElementById('dateGrid');
+const datePicker = document.getElementById('datePicker');
+const timePicker = document.getElementById('timePicker');
+const extraNote = document.getElementById('extraNote');
+
+const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+const summaryDate = document.getElementById('summaryDate');
+const summaryTime = document.getElementById('summaryTime');
+const summaryNote = document.getElementById('summaryNote');
+
+const heartsContainer = document.getElementById('hearts-container');
+const confettiContainer = document.getElementById('confettiContainer');
+
+// ===================== HEARTS BACKGROUND =====================
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = ['💖','💗','💕','💘','🌸','✨','💝','🩷'][Math.floor(Math.random() * 8)];
+  heart.style.left = Math.random() * 100 + '%';
+  heart.style.fontSize = (16 + Math.random() * 24) + 'px';
+  heart.style.animationDuration = (8 + Math.random() * 12) + 's';
+  heart.style.animationDelay = (Math.random() * 5) + 's';
+  heartsContainer.appendChild(heart);
+  setTimeout(() => heart.remove(), 25000);
+}
+
+for (let i = 0; i < 20; i++) setTimeout(createHeart, i * 400);
+setInterval(createHeart, 1000);
+
+// ===================== CONFETTI =====================
+function launchConfetti() {
+  const colors = ['#ff6b9d', '#4fc3f7', '#ffd54f', '#81c784', '#ff8a65', '#ce93d8', '#fff176'];
+  for (let i = 0; i < 80; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.style.left = Math.random() * 100 + '%';
+    el.style.width = (5 + Math.random() * 10) + 'px';
+    el.style.height = (5 + Math.random() * 10) + 'px';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    el.style.animationDuration = (2 + Math.random() * 3) + 's';
+    el.style.animationDelay = (Math.random() * 2) + 's';
+    el.style.transform = `rotate(${Math.random() * 360}deg)`;
+    confettiContainer.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+  }
+}
+
+// ===================== PAGE NAVIGATION =====================
+function showPage(page) {
+  [page1, page2, page3, page4].forEach(p => p.classList.remove('active'));
+  page.classList.add('active');
+}
+
+// ===================== NO BUTTON — STAYS IN MODAL =====================
+function getBtnPos() {
+  const rect = btnNo.getBoundingClientRect();
+  return {
+    left: rect.left, top: rect.top,
+    right: rect.right, bottom: rect.bottom,
+    width: rect.width, height: rect.height,
+    cx: rect.left + rect.width / 2,
+    cy: rect.top + rect.height / 2
+  };
+}
+
+function moveNoButton() {
+  const idx = noBtnMessageIdx % noMessages.length;
+  const cw = btnRow.clientWidth;
+  const ch = btnRow.clientHeight;
+  const bw = btnNo.offsetWidth || 90;
+  const bh = btnNo.offsetHeight || 42;
+  const gap = 14;
+
+  const yesRect = btnYes.getBoundingClientRect();
+  const contRect = btnRow.getBoundingClientRect();
+  const yesL = yesRect.left - contRect.left;
+  const yesR = yesRect.right - contRect.left;
+  const yesT = yesRect.top - contRect.top;
+  const yesB = yesRect.bottom - contRect.top;
+  const yesH = yesB - yesT;
+
+  const candidates = [
+    { x: yesL - bw - gap, y: yesT - bh - gap },
+    { x: yesR + gap,      y: yesT - bh - gap },
+    { x: yesL - bw - gap, y: yesT + (yesH - bh) / 2 },
+    { x: yesR + gap,      y: yesT + (yesH - bh) / 2 },
+    { x: yesL - bw - gap, y: yesB + gap },
+    { x: yesR + gap,      y: yesB + gap }
+  ];
+
+  function noOverlap(cx, cy) {
+    return cx + bw <= yesL || cx >= yesR || cy + bh <= yesT || cy >= yesB;
+  }
+
+  function clampPos(cx, cy) {
+    return {
+      x: Math.max(4, Math.min(cw - bw - 4, cx)),
+      y: Math.max(4, Math.min(ch - bh - 4, cy))
+    };
+  }
+
+  // Try candidate positions in order starting from idx
+  let placed = false;
+  for (let i = 0; i < candidates.length; i++) {
+    const ci = (idx + i) % candidates.length;
+    const clamped = clampPos(candidates[ci].x, candidates[ci].y);
+    if (noOverlap(clamped.x, clamped.y)) {
+      btnNo.style.position = 'absolute';
+      btnNo.style.left = clamped.x + 'px';
+      btnNo.style.top = clamped.y + 'px';
+      btnNo.style.zIndex = '10';
+      placed = true;
+      break;
+    }
+  }
+
+  if (!placed) {
+    // Push as far as possible — force to nearest clear side
+    const x = yesL > cw / 2 ? 4 : cw - bw - 4;
+    const y = yesT > ch / 2 ? 4 : ch - bh - 4;
+    btnNo.style.position = 'absolute';
+    btnNo.style.left = Math.max(4, Math.min(cw - bw - 4, x)) + 'px';
+    btnNo.style.top = Math.max(4, Math.min(ch - bh - 4, y)) + 'px';
+    btnNo.style.zIndex = '10';
+  }
+
+  btnNo.textContent = noMessages[idx];
+  noBtnMessageIdx++;
+}
+
+function resetNoButton() {
+  btnNo.style.position = '';
+  btnNo.style.left = '';
+  btnNo.style.top = '';
+  btnNo.style.zIndex = '';
+  btnNo.textContent = 'No 💔';
+  noBtnMessageIdx = 0;
+}
+
+// Proximity detection
+let lastNoMove = 0;
+const MOVE_COOLDOWN = 180;
+
+document.addEventListener('mousemove', (e) => {
+  if (!page1.classList.contains('active')) return;
+  const now = Date.now();
+  if (now - lastNoMove < MOVE_COOLDOWN) return;
+  // Only run if cursor is inside the card area
+  const cardRect = btnRow.closest('.card').getBoundingClientRect();
+  if (e.clientX < cardRect.left || e.clientX > cardRect.right ||
+      e.clientY < cardRect.top || e.clientY > cardRect.bottom) return;
+  const pos = getBtnPos();
+  const dx = e.clientX - pos.cx;
+  const dy = e.clientY - pos.cy;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  if (dist < 130) {
+    lastNoMove = now;
+    moveNoButton();
+  }
+});
+
+btnNo.addEventListener('mouseenter', (e) => {
+  if (!page1.classList.contains('active')) return;
+  e.preventDefault();
+  moveNoButton();
+});
+
+btnNo.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  if (page1.classList.contains('active')) moveNoButton();
+});
+
+btnNo.addEventListener('touchstart', (e) => {
+  if (!page1.classList.contains('active')) return;
+  e.preventDefault();
+  moveNoButton();
+});
+
+// ===================== PAGE 1 → PAGE 2 =====================
+btnYes.addEventListener('click', () => {
+  resetNoButton();
+  // Set min date to today
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  datePicker.min = `${yyyy}-${mm}-${dd}`;
+  datePicker.value = `${yyyy}-${mm}-${dd}`;
+  showPage(page2);
+});
+
+// ===================== PAGE 2: DATE/TIME VALIDATION =====================
+function validateDateTime() {
+  const dateVal = datePicker.value;
+  const timeVal = timePicker.value;
+  btnNext.disabled = !dateVal || !timeVal;
+}
+
+datePicker.addEventListener('change', validateDateTime);
+timePicker.addEventListener('change', validateDateTime);
+validateDateTime();
+
+// ===================== PAGE 2 → PAGE 3 =====================
+btnNext.addEventListener('click', () => {
+  showPage(page3);
+});
+
+btnBackToPage1.addEventListener('click', () => {
+  showPage(page1);
+});
+
+// ===================== PAGE 3: EXPERIENCE SELECTION =====================
+dateGrid.addEventListener('click', (e) => {
+  const card = e.target.closest('.date-card');
+  if (!card) return;
+  document.querySelectorAll('.date-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedDate = card.dataset.value;
+  btnConfirm.disabled = false;
+});
+
+// ===================== PAGE 3 → PAGE 4 (CONFIRMATION) =====================
+btnConfirm.addEventListener('click', () => {
+  if (!selectedDate) return;
+  const label = dateLabels[selectedDate] || '✨ special date';
+  selectedDateDisplay.textContent = label;
+  summaryDate.textContent = datePicker.value || '—';
+  summaryTime.textContent = timePicker.value || '—';
+  summaryNote.textContent = 'I can\'t stop thinking about you. Every moment with you feels like a dream. I\'m counting down the seconds until I get to see you again. 💕';
+  showPage(page4);
+  launchConfetti();
+  const interval = setInterval(launchConfetti, 4000);
+  setTimeout(() => clearInterval(interval), 12000);
+});
+
+btnBackToPage2.addEventListener('click', () => {
+  selectedDate = null;
+  btnConfirm.disabled = true;
+  document.querySelectorAll('.date-card').forEach(c => c.classList.remove('selected'));
+  showPage(page2);
+});
+
+// ===================== SHARE AS IMAGE =====================
+btnShare.addEventListener('click', async () => {
+  shareStatus.textContent = 'Generating image... ✨';
+  btnShare.disabled = true;
+
+  try {
+    const canvas = await html2canvas(captureArea, {
+      backgroundColor: '#fff5f7',
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      borderRadius: '28px'
+    });
+
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    const file = new File([blob], 'our-date.png', { type: 'image/png' });
+
+    if (navigator.share && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        title: 'Our Date! 💕',
+        text: 'Can\'t wait for our date! 💕',
+        files: [file]
+      });
+      shareStatus.textContent = '✅ Shared! 💕';
+    } else {
+      const link = document.createElement('a');
+      link.download = 'our-date.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      shareStatus.textContent = '✅ Downloaded! Share it with love 💕';
+    }
+  } catch (err) {
+    shareStatus.textContent = '❌ Could not generate — screenshot instead?';
+  }
+
+  btnShare.disabled = false;
+  setTimeout(() => { shareStatus.textContent = ''; }, 4000);
+});
+
+// ===================== INIT =====================
+showPage(page1);
+console.log('💕 Made with love — hope she says Yes! 💕');
+</script>
+</body>
+</html>
