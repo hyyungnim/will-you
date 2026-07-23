@@ -688,12 +688,11 @@ input[type="time"].form-input::-webkit-calendar-picker-indicator {
     </div>
 
     <div class="form-group" style="text-align: center;">
-      <div style="font-size: 0.95rem; color: var(--text-dark); background: var(--pink-bg); border-radius: var(--radius-sm); padding: 14px 16px; line-height: 1.7;">
+      <div id="noteDisplay" style="font-size: 0.95rem; color: var(--text-dark); background: var(--pink-bg); border-radius: var(--radius-sm); padding: 14px 16px; line-height: 1.7;">
         <span style="font-size: 1.1rem;">💌</span><br>
-        I can't stop thinking about you. Every moment with you feels like a dream.<br>
-        I'm counting down the seconds until I get to see you again. 💕
+        You are the most beautiful part of my world. Every day with you is a gift I'll never take for granted. 🌸
       </div>
-      <input type="hidden" id="extraNote" value="I can't stop thinking about you. Every moment with you feels like a dream. I'm counting down the seconds until I get to see you again. 💕">
+      <input type="hidden" id="extraNote" value="">
     </div>
 
     <button id="btnNext" class="btn btn-text" disabled>Continue →</button>
@@ -853,9 +852,34 @@ const dateLabels = {
   sunset: 'Sunset Watch 🌅'
 };
 
+// ===================== ROMANTIC NOTES =====================
+const loveNotes = [
+  "I can't stop thinking about you. Every moment with you feels like a dream. I'm counting down the seconds until I get to see you again. 💕",
+  "You are the most beautiful part of my world. Every day with you is a gift I'll never take for granted. 🌸",
+  "My heart races every time I think of you. You're my favorite thought, my sweetest dream, my everything. 💗",
+  "I never knew what love was until you walked into my life. You're my sunshine on every cloudy day. ☀️",
+  "You make my world brighter just by being in it. I can't wait to create more beautiful memories with you. ✨",
+  "Every love story is special, but ours is my favorite. You're the best thing that's ever happened to me. 📖💕",
+  "You're the first thought in my mind when I wake up and the last one before I fall asleep. You own my heart. 🌙",
+  "Being with you feels like home. You're my safe place, my happy place, my everything. 🏠💖",
+  "You have the most beautiful soul I've ever known. I fall in love with you more every single day. 💫",
+  "I love the way you smile, the way you laugh, the way you make everything better just by being you. 😊💕",
+  "You're not just my date, you're my favorite person. Every moment spent with you is a moment I cherish. 🌷",
+  "If I had to choose a lifetime of moments, I'd choose every single one with you. You're my forever. 💖",
+  "Your voice is my favorite sound. Your laugh is my favorite melody. You are my favorite everything. 🎵💗",
+  "I didn't believe in perfect until I met you. You're everything I never knew I needed and more. 🌟",
+  "You're the kind of beautiful that makes the world stop. And I'd stop the world just to be with you. 🌍💕",
+  "They say good things take time. You were worth every second of the wait. You're my good thing. ⏳💖",
+  "In a world full of temporary things, you're my forever. Never let go of my hand. 🤝💕",
+  "You're my favorite hello and my hardest goodbye. But today, I get to say hello again. And my heart is so happy. 💗",
+  "I love you more than all the stars in the sky, more than all the words in every book, more than everything. 🌌💖",
+  "The best thing about life is that I get to spend it with you. You make everything worth it. 💕✨"
+];
+
 // ===================== STATE =====================
 let selectedDate = null;
 let noBtnMessageIdx = 0;
+let currentNote = loveNotes[0];
 
 // ===================== DOM REFS =====================
 const page1 = document.getElementById('page1');
@@ -882,6 +906,7 @@ const dateGrid = document.getElementById('dateGrid');
 const datePicker = document.getElementById('datePicker');
 const timePicker = document.getElementById('timePicker');
 const extraNote = document.getElementById('extraNote');
+const noteDisplay = document.getElementById('noteDisplay');
 
 const selectedDateDisplay = document.getElementById('selectedDateDisplay');
 const summaryDate = document.getElementById('summaryDate');
@@ -1061,7 +1086,11 @@ btnNo.addEventListener('touchstart', (e) => {
 // ===================== PAGE 1 → PAGE 2 =====================
 btnYes.addEventListener('click', () => {
   resetNoButton();
-  // Set min date to today
+
+  currentNote = loveNotes[Math.floor(Math.random() * loveNotes.length)];
+  noteDisplay.innerHTML = '<span style="font-size: 1.1rem;">💌</span><br>' + currentNote;
+  extraNote.value = currentNote;
+
   const today = new Date();
   const yyyy = today.getFullYear();
   const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -1108,12 +1137,12 @@ btnConfirm.addEventListener('click', () => {
   selectedDateDisplay.textContent = label;
   summaryDate.textContent = datePicker.value || '—';
   summaryTime.textContent = timePicker.value || '—';
-  summaryNote.textContent = 'I can\'t stop thinking about you. Every moment with you feels like a dream. I\'m counting down the seconds until I get to see you again. 💕';
+  summaryNote.textContent = currentNote;
 
   shareExperience.textContent = label;
   shareDate.textContent = datePicker.value || '—';
   shareTime.textContent = timePicker.value || '—';
-  shareNote.textContent = 'I can\'t stop thinking about you. Every moment with you feels like a dream. I\'m counting down the seconds until I get to see you again. 💕';
+  shareNote.textContent = currentNote;
 
   showPage(page4);
   launchConfetti();
@@ -1135,24 +1164,33 @@ btnShare.addEventListener('click', async () => {
 
   try {
     shareCapture.style.position = 'fixed';
-    shareCapture.style.left = '50%';
-    shareCapture.style.top = '50%';
-    shareCapture.style.transform = 'translate(-50%, -50%)';
-    shareCapture.style.zIndex = '-1';
+    shareCapture.style.left = '0';
+    shareCapture.style.top = '0';
+    shareCapture.style.transform = 'none';
+    shareCapture.style.width = '500px';
     shareCapture.style.opacity = '0';
+    shareCapture.style.pointerEvents = 'none';
+    shareCapture.style.zIndex = '-1';
+
+    await new Promise(r => requestAnimationFrame(r));
+    await new Promise(r => requestAnimationFrame(r));
 
     const canvas = await html2canvas(shareCapture, {
       backgroundColor: null,
       scale: 2,
       useCORS: true,
       logging: false,
-      width: 500,
+      width: shareCapture.scrollWidth || 500,
       height: shareCapture.scrollHeight
     });
 
     shareCapture.style.position = 'fixed';
     shareCapture.style.left = '-9999px';
+    shareCapture.style.top = '0';
+    shareCapture.style.width = '';
+    shareCapture.style.transform = '';
     shareCapture.style.opacity = '';
+    shareCapture.style.pointerEvents = '';
     shareCapture.style.zIndex = '';
 
     const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
